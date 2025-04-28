@@ -1,0 +1,23 @@
+{
+    "dialogueGroups": [
+      {
+        "dialogueId": "Box01",
+        "dialogueData": {
+          "lines": [
+            {
+              "characterName": "NPC",
+              "text": "Json 테스트 메세지입니다."
+            },
+            {
+              "characterName": "Player",
+              "text": "플레이어 출력입니다."
+            },
+            {
+              "characterName": "NPC",
+              "text": "NPC 출력입니다."
+            }
+          ]
+        }
+      }
+    ]
+  }

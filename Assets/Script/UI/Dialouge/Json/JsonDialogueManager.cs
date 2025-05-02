@@ -104,11 +104,12 @@ public class JsonDialogueManager : MonoBehaviour
     }
 
     // 대화 종료
-    void EndDialogue()
+    public void EndDialogue()
     {
         Debug.Log("Dialogue Ended");
         nameText.text = "";
         dialogueText.text = "";
+        currentDialogue = null;  // 대화 목록 초기화
         uiPanel.gameObject.SetActive(false);  // UI 비활성화
     }
 

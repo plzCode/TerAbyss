@@ -10,7 +10,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         // 플레이어가 범위 안에 있고, E 키를 눌렀을 때 대화 시작
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
-        {
+        {   
             JsonDialogueManager dialogueManager = FindFirstObjectByType<JsonDialogueManager>();
             if (dialogueManager != null)
             {
@@ -34,11 +34,20 @@ public class DialogueTrigger : MonoBehaviour
             isPlayerInRange = true;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
+        }
+    }
 
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            JsonDialogueManager dialogueManager = FindFirstObjectByType<JsonDialogueManager>();
+            dialogueManager.EndDialogue();
             isPlayerInRange = false;
         }
     }

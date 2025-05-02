@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -14,23 +15,57 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
 
+    [Header("Animation")]
+    public Animator animator;
+    public PlayerStateMachine stateMachine;
+
+    [Header("Player State")]
+    public PlayerIdleState playerIdleState { get; private set; }
+    public PlayerSitState playerSitState { get; private set; }
+
+    private void Awake()
+    {
+        stateMachine = new PlayerStateMachine();
+        playerIdleState = new PlayerIdleState(this, stateMachine, "Idle");
+        playerSitState = new PlayerSitState(this, stateMachine, "Sit");
+    }
+
     void Start()
     {
+        
+        animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
 
         if (cameraTransform == null)
         {
             cameraTransform = Camera.main.transform;
         }
+        stateMachine.Initialize(playerIdleState);
     }
 
     void Update()
     {
         Move();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(animator.GetBool("Sit"))
+            {
+                stateMachine.ChangeState(playerIdleState);
+            }
+            else
+            {
+                stateMachine.ChangeState(playerSitState);
+            }
+        }
     }
 
     void Move()
     {
+        if (animator.GetBool("Sit"))
+        {
+            return;
+        }
         // 입력값 받기
         float horizontal = Input.GetAxis("Horizontal"); // A, D
         float vertical = Input.GetAxis("Vertical");     // W, S
@@ -57,5 +92,8 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = -2f;
         }
+
+        float speed = new Vector2(horizontal, vertical).magnitude;
+        animator.SetFloat("Speed", speed);
     }
 }

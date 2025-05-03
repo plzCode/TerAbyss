@@ -18,16 +18,22 @@ public class PlayerController : MonoBehaviour
     [Header("Animation")]
     public Animator animator;
     public PlayerStateMachine stateMachine;
+    public bool isBusy = false;
 
     [Header("Player State")]
     public PlayerIdleState playerIdleState { get; private set; }
     public PlayerSitState playerSitState { get; private set; }
+    public PlayerAttackState1 playerAttackState1 { get; private set; }
+
+    [Header("Player Effects")]
+    public GameObject attackEffect1;
 
     private void Awake()
     {
         stateMachine = new PlayerStateMachine();
         playerIdleState = new PlayerIdleState(this, stateMachine, "Idle");
         playerSitState = new PlayerSitState(this, stateMachine, "Sit");
+        playerAttackState1 = new PlayerAttackState1(this, stateMachine, "Attack_1");
     }
 
     void Start()
@@ -58,11 +64,16 @@ public class PlayerController : MonoBehaviour
                 stateMachine.ChangeState(playerSitState);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            stateMachine.ChangeState(playerAttackState1);
+        }
     }
 
     void Move()
     {
-        if (animator.GetBool("Sit"))
+        if (isBusy)
         {
             return;
         }

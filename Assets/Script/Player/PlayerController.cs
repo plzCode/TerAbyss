@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UIElements.Experimental;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -24,9 +25,15 @@ public class PlayerController : MonoBehaviour
     public PlayerIdleState playerIdleState { get; private set; }
     public PlayerSitState playerSitState { get; private set; }
     public PlayerAttackState1 playerAttackState1 { get; private set; }
+    public PlayerAttackState2 playerAttackState2 { get; private set; }
 
     [Header("Player Effects")]
     public GameObject attackEffect1;
+    public GameObject attackEffect2;
+
+    [Header("For Mobile")]
+    public DynamicJoystick joystick;
+    public bool isMobile = false;
 
     private void Awake()
     {
@@ -34,6 +41,7 @@ public class PlayerController : MonoBehaviour
         playerIdleState = new PlayerIdleState(this, stateMachine, "Idle");
         playerSitState = new PlayerSitState(this, stateMachine, "Sit");
         playerAttackState1 = new PlayerAttackState1(this, stateMachine, "Attack_1");
+        playerAttackState2 = new PlayerAttackState2(this, stateMachine, "Attack_2");
     }
 
     void Start()
@@ -65,9 +73,13 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !isMobile)
         {
-            stateMachine.ChangeState(playerAttackState1);
+            NormalAttack();
+        }
+        if(Input.GetKeyDown(KeyCode.Mouse1) && !isMobile)
+        {
+            SkillAttack_1();
         }
     }
 
@@ -77,9 +89,15 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        // 입력값 받기
+
         float horizontal = Input.GetAxis("Horizontal"); // A, D
         float vertical = Input.GetAxis("Vertical");     // W, S
+        // 입력값 받기
+        if (isMobile)
+        {
+            horizontal = joystick.Horizontal;
+            vertical = joystick.Vertical;  
+        }
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
@@ -106,5 +124,14 @@ public class PlayerController : MonoBehaviour
 
         float speed = new Vector2(horizontal, vertical).magnitude;
         animator.SetFloat("Speed", speed);
+    }
+
+    public void NormalAttack()
+    {
+        stateMachine.ChangeState(playerAttackState1);
+    }
+    public void SkillAttack_1()
+    {
+        stateMachine.ChangeState(playerAttackState2);
     }
 }

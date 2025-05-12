@@ -295,6 +295,9 @@ PublishScripts/
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
+#Except manifest.json and packages-lock.json (important for package management)
+!Packages/manifest.json
+!Packages/packages-lock.json
 
 # Microsoft Azure Build Output
 csx/

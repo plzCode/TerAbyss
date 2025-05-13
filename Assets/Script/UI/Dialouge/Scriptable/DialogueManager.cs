@@ -63,6 +63,8 @@ public class DialogueManager : MonoBehaviour
             StopCoroutine(typingCoroutine);
         }
         typingCoroutine = StartCoroutine(TypeSentence(line.text));
+
+        
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -104,5 +106,37 @@ public class DialogueManager : MonoBehaviour
         nameText.text = "";
         dialogueText.text = "";
         dialogueText.gameObject.SetActive(false); // 패널 비활성화
+    }
+
+    public void StartFullDialogue(string dialogueId)
+    {
+        if (dialogueDatabase != null)
+        {
+            currentDialogue = dialogueDatabase.GetDialogue(dialogueId)?.lines;
+            if (currentDialogue != null)
+            {
+                StartCoroutine(PlayAllDialogueLines());
+            }
+        }
+    }
+
+    IEnumerator PlayAllDialogueLines()
+    {
+        for (int i = 0; i < currentDialogue.Count; i++)
+        {
+            DialogueLine line = currentDialogue[i];
+            nameText.text = line.characterName;
+
+            if (typingCoroutine != null)
+            {
+                StopCoroutine(typingCoroutine);
+            }
+
+            yield return typingCoroutine = StartCoroutine(TypeSentence(line.text));
+
+            yield return new WaitForSeconds(1.0f); // 각 문장 사이 대기시간
+        }
+
+        EndDialogue();
     }
 }

@@ -63,7 +63,7 @@ public class JsonDialogueManager : MonoBehaviour
     }
 
     // 한 글자씩 타이핑 효과로 출력
-    IEnumerator TypeSentence(string sentence)
+    IEnumerator TypeSentence(string sentence) // 
     {
         isTyping = true;
         dialogueText.text = "";  // 이전 텍스트 비우기

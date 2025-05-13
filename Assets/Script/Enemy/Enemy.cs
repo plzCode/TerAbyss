@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : Character
 {
@@ -6,7 +7,19 @@ public class Enemy : Character
     public EnemyStateMachine stateMachine;
     public EnemyIdleState enemyIdleState;
     public EnemyDieState enemyDieState;
+    public EnemyAttackState enemyAttackState;
     #endregion
+
+    [Header("References")]
+    public Transform player;
+    private NavMeshAgent agent;
+
+    [Header("Settings")]
+    public float detectionRange = 10f; // Range to detect the player
+    public float attackRange = 2f;     // Range to attack the player
+    public float attackDamage = 10f;   // Damage dealt to the player
+
+    private float lastAttackTime;
 
     protected override void Awake()
     {
@@ -14,7 +27,11 @@ public class Enemy : Character
         stateMachine = new EnemyStateMachine();
         enemyIdleState = new EnemyIdleState(this, stateMachine, "Idle");
         enemyDieState = new EnemyDieState(this, stateMachine, "Die");
+        enemyAttackState = new EnemyAttackState(this, stateMachine, "Attack");
+
+        agent = GetComponent<NavMeshAgent>();
     }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
@@ -27,6 +44,7 @@ public class Enemy : Character
     protected override void Update()
     {
         base.Update();
+
     }
     public override void TakeDamage(float damage)
     {

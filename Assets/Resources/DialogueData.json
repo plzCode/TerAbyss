@@ -1,23 +1,40 @@
 {
     "dialogueGroups": [
-      {
-        "dialogueId": "Box01",
-        "dialogueData": {
-          "lines": [
-            {
-              "characterName": "NPC",
-              "text": "Json 테스트 메세지입니다."
-            },
-            {
-              "characterName": "Player",
-              "text": "플레이어 출력입니다."
-            },
-            {
-              "characterName": "NPC",
-              "text": "NPC 출력입니다."
-            }
-          ]
-        }
+    {
+      "dialogueId": "Box01",
+      "dialogueData": {
+        "lines": [
+          {
+            "characterName": "박스",
+            "text": "안녕? 난 박스야. 너는 누구니?"
+          },
+          {
+            "characterName": "Player",
+            "text": "안녕하세요! 저는 플레이어입니다."
+          },
+          {
+            "characterName": "박스",
+            "text": "그럼 죽어!!!!"
+          }
+        ]
+      }      
+    },
+
+    {
+      "dialogueId": "Box02",
+      "dialogueData": {
+        "lines": [
+          {
+            "characterName": "박스",
+            "text": "또 만났군, 플레이어!"
+          },
+          {
+            "characterName": "Player",
+            "text": "이번엔 지지 않겠어!"
+          }
+        ]
       }
-    ]
+    }
+  ]
+    
   }

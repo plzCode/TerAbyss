@@ -25,6 +25,7 @@ public class PlayerController : Character
     public Skill[] skillSlots = new Skill[8];
     public PlayerSkillState[] skillStates = new PlayerSkillState[8];
     public GameObject bulletPrefab;
+    public GameObject bulletPrefab2;
 
     [Header("For Mobile")]
     public DynamicJoystick joystick;
@@ -45,7 +46,7 @@ public class PlayerController : Character
         };
         skillSlots[1] = new BulletSKill
         {
-            bulletPrefab = bulletPrefab,
+            bulletPrefab = bulletPrefab2,
             bulletSpeed = 15f,
             firePoint = firePoint,
             Cooldown = 2f

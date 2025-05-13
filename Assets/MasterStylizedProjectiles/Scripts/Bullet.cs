@@ -17,9 +17,6 @@ namespace MasterStylizedProjectile
         public bool isTargeting;
         public Transform target;
         public float rotSpeed = 0;
-
-        public float damage = 10f;
-
         private void Start()
         {
             if (bulletClip != null)
@@ -40,12 +37,6 @@ namespace MasterStylizedProjectile
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player")) return;
-            if (other.CompareTag("Enemy"))
-            {
-                other.GetComponent<Enemy>().TakeDamage(damage);
-                
-            }
 
             if (OnHitEffect != null)
             {
@@ -55,7 +46,7 @@ namespace MasterStylizedProjectile
                 {
                     onHit.onClip = onHitClip;
                 }
-
+                
             }
             Destroy(gameObject);
         }

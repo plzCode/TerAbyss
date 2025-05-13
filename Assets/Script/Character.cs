@@ -4,7 +4,7 @@ public class Character : MonoBehaviour
 {
     [Header("Stats")]
     public float maxHealth = 100;
-    protected float currentHealth;
+    public float currentHealth;
 
     [Header("Combat")]
     public Transform firePoint;       // 투사체 발사 위치
@@ -49,7 +49,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         Debug.Log($"{gameObject.name} has died.");
 
@@ -58,7 +58,6 @@ public class Character : MonoBehaviour
             Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
 
-        Destroy(gameObject);
     }
 
     public virtual void PlayAnimation(string triggerName)

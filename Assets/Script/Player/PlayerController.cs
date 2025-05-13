@@ -21,8 +21,6 @@ public class PlayerController : Character
 
     [Header("Player State")]
     public PlayerIdleState playerIdleState { get; private set; }
-    public PlayerSitState playerSitState { get; private set; }
-
     [Header("Skill")]
     public Skill[] skillSlots = new Skill[8];
     public PlayerSkillState[] skillStates = new PlayerSkillState[8];

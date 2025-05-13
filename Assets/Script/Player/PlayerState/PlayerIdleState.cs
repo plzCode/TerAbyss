@@ -54,7 +54,7 @@ public class PlayerSitState : PlayerState
 
     
 }
-public class PlayerAttackState1 : PlayerState
+/*public class PlayerAttackState1 : PlayerState
 {
     public PlayerAttackState1(PlayerController player, PlayerStateMachine stateMachine, string _animBoolName) : base(player, stateMachine, _animBoolName)
     {
@@ -104,3 +104,4 @@ public class PlayerAttackState2 : PlayerState
         base.Update();
     }
 }
+*/

@@ -125,10 +125,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8413228a037c5408276ca34e424f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  firePoint: {fileID: 0}
   moveSpeed: 5
+  animator: {fileID: 0}
+  hitEffect: {fileID: 0}
+  deathEffect: {fileID: 0}
   rotationSpeed: 720
   gravity: -9.81
   cameraTransform: {fileID: 0}
+  isBusy: 0
+  bulletPrefab: {fileID: 0}
+  joystick: {fileID: 0}
+  isMobile: 0
 --- !u!143 &5558140074825497427
 CharacterController:
   m_ObjectHideFlags: 0

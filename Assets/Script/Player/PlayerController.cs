@@ -1,12 +1,11 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements.Experimental;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character
 {
     [Header("Movement Settings")]
-    public float moveSpeed = 5f;
     public float rotationSpeed = 10f;
     public float gravity = -9.81f;
 
@@ -17,36 +16,57 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
 
     [Header("Animation")]
-    public Animator animator;
     public PlayerStateMachine stateMachine;
     public bool isBusy = false;
 
     [Header("Player State")]
     public PlayerIdleState playerIdleState { get; private set; }
     public PlayerSitState playerSitState { get; private set; }
-    public PlayerAttackState1 playerAttackState1 { get; private set; }
-    public PlayerAttackState2 playerAttackState2 { get; private set; }
 
-    [Header("Player Effects")]
-    public GameObject attackEffect1;
-    public GameObject attackEffect2;
+    [Header("Skill")]
+    public Skill[] skillSlots = new Skill[8];
+    public PlayerSkillState[] skillStates = new PlayerSkillState[8];
+    public GameObject bulletPrefab;
 
     [Header("For Mobile")]
     public DynamicJoystick joystick;
     public bool isMobile = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         stateMachine = new PlayerStateMachine();
         playerIdleState = new PlayerIdleState(this, stateMachine, "Idle");
-        playerSitState = new PlayerSitState(this, stateMachine, "Sit");
-        playerAttackState1 = new PlayerAttackState1(this, stateMachine, "Attack_1");
-        playerAttackState2 = new PlayerAttackState2(this, stateMachine, "Attack_2");
+
+        skillSlots[0] = new BulletSKill
+        {
+            bulletPrefab = bulletPrefab,
+            bulletSpeed = 15f,
+            firePoint = firePoint,
+            Cooldown = 2f
+        };
+        skillSlots[1] = new BulletSKill
+        {
+            bulletPrefab = bulletPrefab,
+            bulletSpeed = 15f,
+            firePoint = firePoint,
+            Cooldown = 2f
+        };
+
+        // ‚úÖ playerSkillStates Î∞∞Ïó¥ Ï¥àÍ∏∞Ìôî
+        for (int i = 0; i < skillSlots.Length; i++)
+        {
+            if (skillSlots[i] != null)
+            {
+                skillStates[i] = new PlayerSkillState(this, stateMachine, $"Skill_0{i + 1}", skillSlots[i]);
+            }
+        }
+
     }
 
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
 
@@ -57,29 +77,17 @@ public class PlayerController : MonoBehaviour
         stateMachine.Initialize(playerIdleState);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         Move();
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if(animator.GetBool("Sit"))
-            {
-                stateMachine.ChangeState(playerIdleState);
-            }
-            else
-            {
-                stateMachine.ChangeState(playerSitState);
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.Mouse0) && !isMobile)
         {
-            NormalAttack();
-        }
-        if(Input.GetKeyDown(KeyCode.Mouse1) && !isMobile)
-        {
             SkillAttack_1();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !isMobile)
+        {
+            SkillAttack_2();
         }
     }
 
@@ -92,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal"); // A, D
         float vertical = Input.GetAxis("Vertical");     // W, S
-        // ¿‘∑¬∞™ πﬁ±‚
+        // ÏûÖÎ†•Í∞í Î∞õÍ∏∞
         if (isMobile)
         {
             horizontal = joystick.Horizontal;
@@ -103,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            // ƒ´∏ﬁ∂Û πÊ«‚ ±‚¡ÿ ¿Ãµø
+            // Ïπ¥Î©îÎùº Î∞©Ìñ• Í∏∞Ï§Ä Ïù¥Îèô
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSpeed, 0.1f);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -112,11 +120,11 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
         }
 
-        // ¡ﬂ∑¬ ¿˚øÎ
+        // Ï§ëÎ†• Ï†ÅÏö©
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // ∂•ø° ¿÷¿∏∏È ¡ﬂ∑¬ ∏Æº¬
+        // ÎïÖÏóê ÏûàÏúºÎ©¥ Ï§ëÎ†• Î¶¨ÏÖã
         if (controller.isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -125,13 +133,18 @@ public class PlayerController : MonoBehaviour
         float speed = new Vector2(horizontal, vertical).magnitude;
         animator.SetFloat("Speed", speed);
     }
-
-    public void NormalAttack()
-    {
-        stateMachine.ChangeState(playerAttackState1);
-    }
     public void SkillAttack_1()
     {
-        stateMachine.ChangeState(playerAttackState2);
+        if (skillSlots[0] != null && skillSlots[0].CanActivate())
+        {
+            stateMachine.ChangeState(skillStates[0]);
+        }
+    }
+    public void SkillAttack_2()
+    {
+        if (skillSlots[1] != null && skillSlots[1].CanActivate())
+        {
+            stateMachine.ChangeState(skillStates[1]);
+        }
     }
 }

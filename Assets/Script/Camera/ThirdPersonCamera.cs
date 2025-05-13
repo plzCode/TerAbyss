@@ -19,8 +19,8 @@ public class ThirdPersonCamera : MonoBehaviour
     void Start()
     {
         playerTransform = player;
-        //Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 잠금
-        //Cursor.visible = false; // 커서 숨김
+        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 잠금
+        Cursor.visible = false; // 커서 숨김
     }
 
     void Update()

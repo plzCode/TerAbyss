@@ -24,7 +24,9 @@ public class PlayerController : Character
     [Header("Skill")]
     public Skill[] skillSlots = new Skill[8];
     public PlayerSkillState[] skillStates = new PlayerSkillState[8];
-    public GameObject bulletPrefab;
+
+    public GameObject bulletPrefab0;
+    public GameObject bulletPrefab1;
     public GameObject bulletPrefab2;
 
     [Header("For Mobile")]
@@ -37,14 +39,22 @@ public class PlayerController : Character
         stateMachine = new PlayerStateMachine();
         playerIdleState = new PlayerIdleState(this, stateMachine, "Idle");
 
+        // PlayerSkillState 배열 초기화
         skillSlots[0] = new BulletSKill
         {
-            bulletPrefab = bulletPrefab,
+            bulletPrefab = bulletPrefab0,
+            bulletSpeed = 30f,
+            firePoint = firePoint,
+            Cooldown = 0.1f
+        };
+        skillSlots[1] = new BulletSKill
+        {
+            bulletPrefab = bulletPrefab1,
             bulletSpeed = 15f,
             firePoint = firePoint,
             Cooldown = 2f
         };
-        skillSlots[1] = new BulletSKill
+        skillSlots[2] = new BulletSKill
         {
             bulletPrefab = bulletPrefab2,
             bulletSpeed = 15f,
@@ -57,7 +67,7 @@ public class PlayerController : Character
         {
             if (skillSlots[i] != null)
             {
-                skillStates[i] = new PlayerSkillState(this, stateMachine, $"Skill_0{i + 1}", skillSlots[i]);
+                skillStates[i] = new PlayerSkillState(this, stateMachine, $"Skill_0{i}", skillSlots[i]);
             }
         }
 
@@ -80,13 +90,20 @@ public class PlayerController : Character
     {
         base.Update();
         Move();
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isMobile)
+        if (!isMobile)
         {
-            SkillAttack_1();
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1) && !isMobile)
-        {
-            SkillAttack_2();
+            if(Input.GetKey(KeyCode.Mouse0))
+            {
+                SkillAttack_0();
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                SkillAttack_1();
+            }
+            if (Input.GetKey(KeyCode.R))
+            {
+                SkillAttack_2();
+            }
         }
     }
 
@@ -132,18 +149,26 @@ public class PlayerController : Character
         float speed = new Vector2(horizontal, vertical).magnitude;
         animator.SetFloat("Speed", speed);
     }
-    public void SkillAttack_1()
+
+    public void SkillAttack_0()
     {
         if (skillSlots[0] != null && skillSlots[0].CanActivate())
         {
             stateMachine.ChangeState(skillStates[0]);
         }
     }
-    public void SkillAttack_2()
+    public void SkillAttack_1()
     {
         if (skillSlots[1] != null && skillSlots[1].CanActivate())
         {
             stateMachine.ChangeState(skillStates[1]);
+        }
+    }
+    public void SkillAttack_2()
+    {
+        if (skillSlots[2] != null && skillSlots[2].CanActivate())
+        {
+            stateMachine.ChangeState(skillStates[2]);
         }
     }
 }

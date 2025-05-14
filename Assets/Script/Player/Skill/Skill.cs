@@ -12,7 +12,7 @@ public abstract class Skill
     public void Use(Character owner)
     {
         if (CanActivate())
-        {
+        {            
             LastUsedTime = Time.time;
             Activate(owner);
         }

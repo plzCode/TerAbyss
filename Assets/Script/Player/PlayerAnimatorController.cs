@@ -9,18 +9,30 @@ public class PlayerAnimatorController : MonoBehaviour
         player.stateMachine.ChangeState(player.playerIdleState);
     }
 
+
+    public void UseSkill00()
+    {
+        if (player.skillStates[0] != null)
+        {
+            //player.stateMachine.ChangeState(player.skillStates[0]);
+            player.skillStates[0].UseSKill();
+        }
+
+    }
     public void UseSkill01()
     {
-        if(player.skillStates[0] != null)
+        if(player.skillStates[1] != null)
         {
-            player.skillStates[0].UseSKill();
+            //player.stateMachine.ChangeState(player.skillStates[1]);
+            player.skillStates[1].UseSKill();
         }
     }
     public void UseSkill02()
     {
-        if (player.skillStates[1] != null)
+        if (player.skillStates[2] != null)
         {
-            player.skillStates[1].UseSKill();
+            //player.stateMachine.ChangeState(player.skillStates[2]);
+            player.skillStates[2].UseSKill();
         }
     }
 

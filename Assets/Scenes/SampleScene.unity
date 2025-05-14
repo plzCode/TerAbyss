@@ -119,6 +119,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &102819356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102819358}
+  - component: {fileID: 102819357}
+  m_Layer: 0
+  m_Name: Decal Projector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &102819357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102819356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 9e894d668ae909640b27c9f334f0c8ce, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 0.9
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_DecalLayerMask: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0.5}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_FadeFactor: 1
+--- !u!4 &102819358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102819356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.785, y: 3.09, z: -1.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &212418340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1722,8 @@ MonoBehaviour:
   gravity: -9.81
   cameraTransform: {fileID: 1531171123}
   isBusy: 0
-  bulletPrefab: {fileID: 8378503196372639160, guid: dbb1ad381e951294793d52bdc384acc9, type: 3}
+  bulletPrefab0: {fileID: 8378503196372639160, guid: 6c31686383839e54eacb732be7e80e89, type: 3}
+  bulletPrefab1: {fileID: 8378503196372639160, guid: dbb1ad381e951294793d52bdc384acc9, type: 3}
   bulletPrefab2: {fileID: 8378503196372639160, guid: fc1e7376e1dcb104dbedf502998a90c4, type: 3}
   joystick: {fileID: 8135886327082463018}
   isMobile: 0
@@ -3899,7 +3956,7 @@ Transform:
   m_GameObject: {fileID: 747219442}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.37, y: 0.68, z: -7.5}
+  m_LocalPosition: {x: 12.34, y: 0.68, z: -4.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3934,8 +3991,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747219444}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.00000029563904, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6342,7 +6399,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.9794235, y: 2.8613827, z: 1.1693147}
-  m_LocalScale: {x: 16.638, y: 1, z: 20.354}
+  m_LocalScale: {x: 16.638, y: 1, z: 42.69455}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 405340966}
@@ -8264,3 +8321,4 @@ SceneRoots:
   - {fileID: 1531171123}
   - {fileID: 747516946}
   - {fileID: 8551771612334949978}
+  - {fileID: 102819358}

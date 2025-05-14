@@ -1,6 +1,9 @@
+using System.Collections;
+using UnityEngine;
+
 public class PlayerSkillState : PlayerState
 {
-    private Skill skillToUse;
+    private Skill skillToUse; 
 
     public PlayerSkillState(PlayerController player, PlayerStateMachine stateMachine, string _animBoolName, Skill skill)
         : base(player, stateMachine, _animBoolName)
@@ -23,7 +26,7 @@ public class PlayerSkillState : PlayerState
 
     public override void Update()
     {
-        base.Update();        
+        base.Update();
     }
 
     public void UseSKill()
@@ -33,4 +36,5 @@ public class PlayerSkillState : PlayerState
             skillToUse.Use(player);
         }
     }
+    
 }

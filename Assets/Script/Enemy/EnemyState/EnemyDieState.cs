@@ -9,6 +9,7 @@ public class EnemyDieState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.isBusy = true; // Set the enemy to busy state
 
     }
 

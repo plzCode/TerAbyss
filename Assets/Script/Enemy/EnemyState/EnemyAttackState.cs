@@ -9,12 +9,13 @@ public class EnemyAttackState : EnemyState
     public override void Enter()
     {
         base.Enter();
-
+        enemy.isBusy = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        enemy.isBusy = false;
     }
 
     public override void HandleInput()
